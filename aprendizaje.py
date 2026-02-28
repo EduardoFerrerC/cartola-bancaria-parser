@@ -1,34 +1,19 @@
-# Aprendizaje Inteligente
+import json
+import os
 
-Este archivo contiene un sistema de aprendizaje de patrones y propuestas.
+def cargar_patrones():
+    if os.path.exists('data/patrones.json'):
+        with open('data/patrones.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
 
-## Sistema de Aprendizaje
+def guardar_patrones(patrones):
+    os.makedirs('data', exist_ok=True)
+    with open('data/patrones.json', 'w', encoding='utf-8') as f:
+        json.dump(patrones, f, ensure_ascii=False, indent=2)
 
-- Definición de patrones.
-- Implementación de algoritmos de aprendizaje.
-
-## Sistema de Propuestas
-
-- Generación de propuestas basadas en patrones aprendidos.
-- Evaluación de propuestas.
-
-## Ejemplo de Implementación
-
-```python
-class SistemaAprendizaje:
-    def __init__(self, datos):
-        self.datos = datos
-
-    def aprender(self):
-        # Lógica de aprendizaje
-        pass
-
-    def proponer(self):
-        # Lógica para generar propuestas
-        pass
-
-# Uso del sistema
-Sistema = SistemaAprendizaje(datos)
-Sistema.aprender()
-print(Sistema.proponer())
-```
+def propuesta_patron(descripcion, patrones):
+    for clave, valor in patrones.items():
+        if clave.lower() in descripcion.lower():
+            return valor
+    return None
